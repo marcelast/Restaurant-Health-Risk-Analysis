@@ -12,6 +12,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
+import nltk
+nltk.download('stopwords')
+
 
 st.title('Analiza Riscurilor Sănătății Publice în Restaurante pe Baza Recenziilor')
 
@@ -135,14 +138,17 @@ ax[1].axis('off')
 
 st.pyplot(fig)
 
-# Vizualizare finală pentru restaurante și riscuri
-restaurant_risk_summary = data[['restaurant_name', 'risk']].groupby('restaurant_name')['risk'].agg(lambda x: x.mode()[0]).reset_index()
+# Creăm un grafic barplot pentru a vizualiza restaurantele și nivelul de risc
+plt.figure(figsize=(12, 8))
+sns.countplot(data=data, x='restaurant_name', hue='risk', palette='coolwarm')
 
-st.subheader('Nivelul de Risc al Restaurantelor')
-fig, ax = plt.subplots(figsize=(12, 8))
-sns.countplot(data=restaurant_risk_summary, x='restaurant_name', hue='risk', palette='coolwarm')
-ax.set_title('Nivelul de Risc al Restaurantelor')
-ax.set_xlabel('Restaurant')
-ax.set_ylabel('Număr de Recenzii')
+# Setăm titlul și etichetele axelor
+plt.title('Nivelul de risc al restaurantelor', fontsize=16)
+plt.xlabel('Restaurant', fontsize=14)
+plt.ylabel('Număr de recenzii', fontsize=14)
+
+# Rotim etichetele de pe axa X pentru a fi mai lizibile
 plt.xticks(rotation=90)
-st.pyplot(fig)
+
+# Afișăm graficul în Streamlit
+st.pyplot(plt)
