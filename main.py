@@ -18,6 +18,7 @@ import nltk
 nltk.download('stopwords', quiet=True)
 nltk.download('wordnet', quiet=True)
 nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab')
 nltk.data.path.append('./nltk_data')
 
 # Încărcarea setului de date
