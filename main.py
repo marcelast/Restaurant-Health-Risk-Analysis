@@ -17,6 +17,7 @@ import nltk
 # Descarcă resursele necesare pentru NLTK
 nltk.download('stopwords', quiet=True)
 nltk.download('wordnet', quiet=True)
+nltk.download('punkt', quiet=True)
 nltk.data.path.append('./nltk_data')
 
 # Încărcarea setului de date
