@@ -15,9 +15,9 @@ from sklearn.metrics import classification_report
 import nltk
 
 # Descarcă resursele necesare pentru NLTK
-nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
 nltk.download('wordnet', quiet=True)
+nltk.data.path.append('./nltk_data')
 
 # Încărcarea setului de date
 st.title('Analiza Riscurilor Sănătății Publice în Restaurante pe Baza Recenziilor')
