@@ -14,21 +14,20 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 import nltk
 
+# Descarcă resursele necesare pentru NLTK
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
 nltk.download('wordnet', quiet=True)
 
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
-
-
+# Încărcarea setului de date
 st.title('Analiza Riscurilor Sănătății Publice în Restaurante pe Baza Recenziilor')
 
-# Încărcarea setului de date
-file_path = "restaurantsReviews.csv"  # Încărcați fișierul corect
-data = pd.read_csv(file_path)
+file_path = "restaurantsReviews.csv"  # Verifica dacă calea fișierului este corectă
+try:
+    data = pd.read_csv(file_path)
+except FileNotFoundError:
+    st.error(f"Fișierul {file_path} nu a fost găsit.")
+    st.stop()
 
 # Maparea locationId cu numele restaurantelor
 location_mapping = {
@@ -44,6 +43,7 @@ location_mapping = {
     25270571: "Charmat Prosecco Bar"
 }
 
+# Adăugăm o coloană pentru numele restaurantelor
 data['restaurant_name'] = data['locationId'].map(location_mapping)
 
 # Prezentarea datelor
@@ -67,14 +67,14 @@ ax.set_xlabel("Rating")
 ax.set_ylabel("Număr de Recenzii")
 st.pyplot(fig)
 
-# preprocesarea textului
+# Preprocesarea textului
 def preprocess_text(text):
     stop_words = set(stopwords.words('english'))
     lemmatizer = WordNetLemmatizer()
     text = text.lower()
     text = ''.join([char for char in text if char not in string.punctuation])
     words = word_tokenize(text)
-    words = [lemmatizer.lemmatize(word) for word in words if word not in stop_words]
+    words = [lemmatizer.lemmatize(word) for word in words if word not in stop_words and len(word) > 2]
     return ' '.join(words)
 
 data['processed_text'] = data['text'].apply(preprocess_text)
