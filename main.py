@@ -14,7 +14,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 import nltk
 nltk.download('stopwords')
-
+nltk.download('punkt')
+nltk.download('wordnet')
 
 st.title('Analiza Riscurilor Sănătății Publice în Restaurante pe Baza Recenziilor')
 
