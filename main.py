@@ -18,6 +18,12 @@ nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
 nltk.download('wordnet', quiet=True)
 
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
+
 st.title('Analiza Riscurilor Sănătății Publice în Restaurante pe Baza Recenziilor')
 
 # Încărcarea setului de date
